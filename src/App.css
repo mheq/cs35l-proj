@@ -1,0 +1,27 @@
+.visibleCards{
+  width: 60px;
+  height: 90px;
+}
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  height: 50%;
+  background-color: antiquewhite;
+}
+
+.centered {
+  text-align: center;
+  padding: 5%;
+}
+
+.queue {
+  color: royalblue;
+}
+
+.playerBox {}
+
+.valueText{
+  color: red;
+  font-size: x-large;
+}
