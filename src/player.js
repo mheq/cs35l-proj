@@ -1,33 +1,30 @@
-import {Stock} from "./stock";
+import { Stock } from "./stock";
 
-export class Player {
-    constructor(name) {
-        this.ID = name;
-        this.hand = new Stock(false);
-        this.guard = new Stock(false);
-        this.mystery = new Stock(true);
-    }
+function Player({ name }) {
+  const hand = new Stock(false);
+  const guard = new Stock(false);
+  const mystery = new Stock(true);
 
-    //Refers to first encountered populated stock: hand -> guard -> mystery
-    priority() {
-        if(this.hand.amount != 0) return this.hand;
-        else if (this.guard.amount != 0) return this.guard;
-        else return this.mystery;
-    }
+  const priority = () => {
+    if (hand.amount !== 0) return hand;
+    else if (guard.amount !== 0) return guard;
+    else return mystery;
+  };
 
-    render(name) {
-        if(name == this.ID) {
-            return (
-                <></>
-            );
-        }
-        return (
-          <th>
-              <h1>{this.ID}</h1>
-              <b>Cards in hand: {this.hand.amount}</b>
-              <b>Guard Cards: {this.guard.list()}</b>
-              <b>Mystery Cards: {this.mystery.amount}</b>
-          </th>
-        );
+  const render = () => {
+    if (name === this.ID) {
+      return <></>;
     }
+    return (
+      <th>
+        <h1>{name}</h1>
+        <b>Cards in hand: {hand.amount}</b>
+        <b>Guard Cards: {guard.list()}</b>
+        <b>Mystery Cards: {mystery.amount}</b>
+      </th>
+    );
+  };
+  return <>{render()}</>;
 }
+
+export default Player;
