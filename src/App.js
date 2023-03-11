@@ -1,10 +1,10 @@
-import logo from "./logo.svg";
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Stock, card_to_pos, pos_to_card } from "./stock.js";
 import { Player } from "./player.js";
+import Auth from "./Auth";
 
-function Game() {
+function App() {
   const [draw_pile, setDrawPile] = useState(new Stock(true));
   const [discard_pile, setDiscardPile] = useState(new Stock(false));
   const [play_pile, setPlayPile] = useState(new Stock(false));
@@ -13,17 +13,6 @@ function Game() {
   const [buffer, setBuffer] = useState([]);
   const [started, setStarted] = useState(false);
   const [current_player, setCurrentPlayer] = useState(null);
-
-  function initialize() {
-    if (started) return;
-
-    for (let i = 0; i < 13; i++) {
-      draw_pile.add(pos_to_card(i), 4);
-    }
-
-    setDrawPile(draw_pile);
-    setStarted(true);
-  }
 
   function load(deck) {
     const load = deck.stock.map((num, index) => {
@@ -72,18 +61,21 @@ function Game() {
   }
 
   return (
-    <div className="centered">
-      {gameComponents()}
-      <div className="box">{load(draw_pile)}</div>
+    <>
+      <Auth />
       <div className="centered">
-        {buffer.map((val) => {
-          return <text className="queue"> {val} </text>;
-        })}
+        {gameComponents()}
+        <div className="box">{load(draw_pile)}</div>
+        <div className="centered">
+          {buffer.map((val) => {
+            return <text className="queue"> {val} </text>;
+          })}
+        </div>
+        <button onClick={() => reset_buffer()}>Reset Buffer</button>
+        {playerComponents()}
       </div>
-      <button onClick={() => reset_buffer()}>Reset Buffer</button>
-      {playerComponents()}
-    </div>
+    </>
   );
 }
 
-export default Game;
+export default App;
