@@ -120,6 +120,7 @@ export class Stock {
     //List entire stock (only cards in stock)
     list(log = true) {
         if(this.hidden) return;
+        if(this.amount == 0) return "";
 
         let list = "{ ";
         for (let i = 0; i < 13; i++) {
@@ -127,7 +128,7 @@ export class Stock {
                 list += pos_to_card(i) + ":" + this.stock[i] + " ";
             }
         }
-        list += "} : Total - " + this.amount;
+        list += "}";
 
         if(log) console.log(list);
         return list;
@@ -137,14 +138,21 @@ export class Stock {
     read() {
         let readstring = "";
         if (!this.hidden) {
-            readstring += this.list(false) + " : ";
+            readstring += this.list(false) + "\n";
         }
         return readstring + "Count - " + this.amount;
     }
 
     render() {
+        if(!this.hidden)
+            return (<>
+                {this.list()}
+                <div></div>
+                Count - {this.amount}
+            </>);
+
         return (
-            <>{this.read()}</>
+            <>{this.amount}</>
         );
     }
 }
